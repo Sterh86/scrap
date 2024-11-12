@@ -1,5 +1,7 @@
 import re
 import xml.etree.ElementTree as ET
+from lxml import etree
+
 
 
 text = """Welcome to the Regex Training Center! Let's start with some dates:
@@ -48,7 +50,8 @@ def use_re():
     print(dates)
     print(mails)
 
-html = """<html
+html = """
+<html
     dir="ltr"
     lang="pt"
 >
@@ -505,10 +508,17 @@ this['i18n.mosaic-provider-passport-intercept']={"":{"Content-Type":" text/plain
 
 
 def parse_html():
-    root = ET.fromstring(html)
-    #facts = root.findall('.//*[@id="text-input-what"]')
-    facts = root.findall('.//*[@id="text-input-where"]')
-    print(facts)
+    tree = etree.HTML(html)
+    xpath_a = '//*[@id="text-input-what"]'
+    xpath_b = '//*[@id="text-input-where"]'
+    xpath_c = '//*[@id="jobsearch"]/div/div[2]/button'
+
+    tag_a = tree.xpath(xpath_a)
+    tag_b = tree.xpath(xpath_b)
+    tag_c = tree.xpath(xpath_c)
+    print(tag_a[0].text)
+    print(tag_b[0].text)
+    print(tag_c[0].text)
 
 
 
