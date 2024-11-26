@@ -18,19 +18,21 @@ def parse_html():
         data = []
         cards = soup.find_all('div', class_ ='ssrcss-1f3bvyz-Stack e1y4nx260')
 
-    for card in cards:
+    for card in cards[:5]:
         url = card.find('a').get('href')
         url = 'https://www.bbc.com/' + url
-        print(url)
-        title = card.find('span', class_ = 'ssrcss-1if1g9v-MetadataText e4wm5bw1')
-        print(title)
+        #print(url)
+        title = card.find('a').find('span').text
+        #print(title)
 
         data.append({
             'url': url,
             'title': title
         })
-    with open('results.json', 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    with open('res.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
+        print('сохранено')
 
 if __name__ == '__main__':
 
